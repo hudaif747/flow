@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { pageAnimation } from "./animations"; // Import your animation settings
 
 type AnimatedPageProps = {
   children: React.ReactNode;
