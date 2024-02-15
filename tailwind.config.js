@@ -10,7 +10,9 @@ export default {
         },
       },
       animation: {
-        fadeIn: "fadeIn 1s ease-in-out forwards",
+        fadeIn_1: "fadeIn 1s ease-in-out forwards",
+        fadeIn_3: "fadeIn 3s ease-in-out forwards",
+        fadeIn_5: "fadeIn 5s ease-in-out forwards",
       },
       fontFamily: {
         raleway: ["Raleway", "sans-serif"],
