@@ -28,7 +28,8 @@ jobs:
       # Add additional steps for deployment
       # For example, deploying to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+            
         with:
           branch: gh-pages # The target branch for deployment
           folder: dist # The folder to deploy, adjust if your output directory differs
