@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* setting text selection of the app */
+::selection {
+  background-color: #f8f8f8;
+  color: #181818;
+}
+
+/* For compatibility with older versions of Safari */
+::-webkit-selection {
+  background-color: #f8f8f8;
+  color: #181818;
+}
