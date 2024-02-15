@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main # or your default branch
+      - develop # to trigger on develop branch
 
 jobs:
   deploy:
