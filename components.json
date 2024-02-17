@@ -6,12 +6,12 @@
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/index.css",
-    "baseColor": "slate",
+    "baseColor": "stone",
     "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
     "components": "@/shadcn/components",
-    "utils": "@/sahdcn/lib/utils"
+    "utils": "@/shadcn/lib/utils"
   }
 }
