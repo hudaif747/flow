@@ -17,33 +17,33 @@ interface CookieConsentState {
 }
 
 const CookieConsent: React.FC<CookieConsentProps> = () => {
-  // const [showConsentBanner, setShowConsentBanner] =
-  //   useState<CookieConsentState["showConsentBanner"]>(false);
+  const [showConsentBanner, setShowConsentBanner] =
+    useState<CookieConsentState["showConsentBanner"]>(false);
 
-  // useEffect(() => {
-  //   const checkCookieConsent = () => {
-  //     // Example check: You might implement a more sophisticated check here
-  //     if (!localStorage.getItem("cookieConsentGiven")) {
-  //       setShowConsentBanner(true);
-  //     }
-  //   };
+  useEffect(() => {
+    const checkCookieConsent = () => {
+      // Example check: You might implement a more sophisticated check here
+      if (!localStorage.getItem("cookieConsentGiven")) {
+        setShowConsentBanner(true);
+      }
+    };
 
-  //   checkCookieConsent();
-  // }, []);
+    checkCookieConsent();
+  }, []);
 
-  // const handleAccept = () => {
-  //   localStorage.setItem("cookieConsentGiven", "true");
-  //   setShowConsentBanner(false);
-  //   // Add any actions you need to take when the user accepts cookies
-  // };
+  const handleAccept = () => {
+    localStorage.setItem("cookieConsentGiven", "true");
+    setShowConsentBanner(false);
+    // Add any actions you need to take when the user accepts cookies
+  };
 
-  // const handleReject = () => {
-  //   setShowConsentBanner(false);
-  //   // Add any actions you need to take when the user rejects cookies
-  // };
+  const handleReject = () => {
+    setShowConsentBanner(false);
+    // Add any actions you need to take when the user rejects cookies
+  };
 
   return (
-    <AlertDialog open={true}>
+    <AlertDialog open={showConsentBanner}>
       {/* <AlertDialogTrigger>Open</AlertDialogTrigger> */}
       <AlertDialogContent>
         <AlertDialogHeader>
