@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { Button } from "@/shadcn/components/ui/button";
+import { MinusCircledIcon } from "@radix-ui/react-icons";
+import React, { useState, useEffect, useRef } from "react";
 
 interface DeezerEmbedProps {
   deezerUrl: string;
@@ -7,6 +9,7 @@ interface DeezerEmbedProps {
   maxheight?: number;
   radius?: boolean;
   tracklist?: boolean;
+  handleClose: () => void;
 }
 
 interface DeezerOEmbedResponse {
@@ -21,8 +24,16 @@ const DeezerEmbed: React.FC<DeezerEmbedProps> = ({
   maxheight = 420,
   radius = false,
   tracklist = false,
+  handleClose,
 }) => {
   const [embedHtml, setEmbedHtml] = useState<string>("");
+
+  const divRef = useRef(null) as any;
+
+  useEffect(() => {
+    // Focus the div when the component mounts
+    if (divRef) divRef?.current?.focus();
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams({
@@ -51,7 +62,16 @@ const DeezerEmbed: React.FC<DeezerEmbedProps> = ({
     fetchOEmbedContent();
   }, [deezerUrl, autoplay, maxwidth, maxheight, radius, tracklist]);
 
-  return <div dangerouslySetInnerHTML={{ __html: embedHtml }} />;
+  return (
+    <div className="relative">
+      <div className="absolute top-1 left-1">
+        <Button onClick={handleClose} variant="ghost" size="icon">
+          <MinusCircledIcon className="h-8 w-8" />
+        </Button>
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: embedHtml }} />
+    </div>
+  );
 };
 
 export default DeezerEmbed;

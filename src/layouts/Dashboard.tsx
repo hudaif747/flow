@@ -1,24 +1,19 @@
-import CookieConsent from "@/components/cookieConsent";
-import DeezerEmbed from "@/deezer/DeezerEmbed";
+import BoomBox from "./BoomBox";
 
 const Dashboard = () => {
-  const focusMusicPlaylistUrl = "https://www.deezer.com/playlist/9817127782";
-
   return (
     <div className="flex items-center h-screen">
       <div className="w-1/6 bg-black h-screen flex justify-center items-center">
         <h1>Side Panel</h1>
       </div>
-      <div className="w-5/6 flex justify-center items-center ">
-        <CookieConsent />
-        <DeezerEmbed
-          deezerUrl={focusMusicPlaylistUrl}
-          autoplay={true}
-          maxwidth={700}
-          maxheight={300}
-          radius={true}
-          tracklist={true}
-        />
+      <div className="w-5/6 h-screen flex flex-col justify-between">
+        <div className="flex-1">
+          {/* For any other content that might be in the middle */}
+          {/* Content here */}
+        </div>
+        <div className="self-end pb-4 pr-4">
+          <BoomBox />
+        </div>
       </div>
     </div>
   );
