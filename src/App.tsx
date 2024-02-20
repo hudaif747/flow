@@ -9,7 +9,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="App min-h-screen text-soft-white font-raleway">
+      <div className="App min-h-screen text-primary font-raleway">
         <HashRouter>
           <AnimatePresence>
             <AnimatedRoutes />
