@@ -1,5 +1,5 @@
 import { Button } from "@/shadcn/components/ui/button";
-import { DragHandleDots2Icon, PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon } from "@radix-ui/react-icons";
 import React, { useRef, useState } from "react";
 
 interface TodoItem {
