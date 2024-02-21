@@ -37,7 +37,7 @@ const BoomBox: React.FC<BoomBoxProps> = () => {
 
   return (
     <>
-      <motion.button
+      <motion.div
         initial="hidden"
         animate={!isExpanded ? "visible" : "hidden"}
         variants={containerVariants}
@@ -49,7 +49,7 @@ const BoomBox: React.FC<BoomBoxProps> = () => {
             <HeadphonesIcon className="h-12 w-12" />
           </BackgroundGradient>
         </Button>
-      </motion.button>
+      </motion.div>
       <motion.div
         initial="hidden"
         animate={isExpanded ? "visible" : "hidden"}

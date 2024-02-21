@@ -1,17 +1,30 @@
 import { Button } from "@/shadcn/components/ui/button";
+import { debounce } from "@/utility/utility";
 import { PlusIcon } from "@radix-ui/react-icons";
 import React, { useRef, useState } from "react";
+import TodoItem from "@/components/todoItem";
 
-interface TodoItem {
+export interface ITodoItem {
   id: number;
   text?: string;
+  checked: boolean;
 }
 
 const TodoList: React.FC = () => {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [todos, setTodos] = useState<ITodoItem[]>([]);
   const editingRefs = useRef<{ [key: number]: HTMLSpanElement | null }>(
     {}
   ).current;
+
+  const initialTodoItem: ITodoItem = {
+    id: Date.now(),
+    text: "",
+    checked: false,
+  };
+
+  const handleBackspaceDebounced = debounce((index: number) => {
+    setTodos(todos.filter((_, i) => i !== index));
+  }, 200);
 
   const handleKeyPress = (
     event: React.KeyboardEvent<HTMLSpanElement>,
@@ -33,16 +46,13 @@ const TodoList: React.FC = () => {
       event.key === "Backspace" &&
       (event.target as HTMLElement).innerText.trim() === ""
     ) {
-      setTodos(todos.filter((_, i) => i !== index));
+      handleBackspaceDebounced(index);
     }
   };
 
   const addTodo = () => {
-    const newTodo = { id: Date.now(), text: "" };
+    const newTodo = initialTodoItem;
     setTodos([...todos, newTodo]);
-    setTimeout(() => {
-      editingRefs[newTodo.id]?.focus();
-    }, 0);
   };
 
   const focusOnEdit = (id: number) => {
@@ -64,36 +74,40 @@ const TodoList: React.FC = () => {
     </Button>
   );
 
+  const handleCheckBoxChange = (checked: boolean | string, index: number) => {
+    const updatedTodos = todos.slice();
+    updatedTodos[index].checked = checked as boolean;
+    setTodos(updatedTodos);
+  };
+
+  const onBlur = (event: React.FocusEvent<HTMLSpanElement>, index: number) => {
+    const newText = (event.target as HTMLElement).innerText.trim();
+    if (newText === "") {
+      setTodos(todos.filter((_, i) => i !== index));
+    } else {
+      const updatedTodos = todos.slice();
+      updatedTodos[index].text = newText;
+      setTodos(updatedTodos);
+    }
+  };
+
   return (
     <div className="p-4">
-      <h2 className="text-4xl">Priorities List</h2>
+      <h2 className="text-4xl">My list</h2>
       <div className="py-4">
         {addTodoButton}
-        <div className="flex flex-col space-y-8 my-4">
+        <div className="flex flex-col space-y-4 my-4">
           {todos.map((todo, index) => (
-            <div key={todo.id} onClick={() => focusOnEdit(todo.id)}>
-              <span
-                contentEditable
-                suppressContentEditableWarning
-                className={`group px-3 py-2 rounded-md hover:bg-secondary focus-visible:outline-0 focus:bg-secondary hover:cursor-default`}
-                ref={(el) => (editingRefs[todo.id] = el)}
-                onKeyDown={(event) => handleKeyPress(event, index)}
-                onBlur={(event) => {
-                  const newText = (
-                    event.target as HTMLElement
-                  ).innerText.trim();
-                  if (newText === "") {
-                    setTodos(todos.filter((_, i) => i !== index));
-                  } else {
-                    const updatedTodos = todos.slice();
-                    updatedTodos[index].text = newText;
-                    setTodos(updatedTodos);
-                  }
-                }}
-              >
-                {todo.text}
-              </span>
-            </div>
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              index={index}
+              handleCheckBoxChange={handleCheckBoxChange}
+              handleKeyPress={handleKeyPress}
+              onBlur={onBlur}
+              focusOnEdit={focusOnEdit}
+              isNewTodo={index === todos.length - 1}
+            />
           ))}
         </div>
       </div>
