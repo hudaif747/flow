@@ -3,18 +3,22 @@ import { debounce } from "@/utility/utility";
 import { PlusIcon } from "@radix-ui/react-icons";
 import React, { useRef, useState } from "react";
 import TodoItem from "@/components/todoItem";
-
-export interface ITodoItem {
-  id: number;
-  text?: string;
-  checked: boolean;
-}
+import Basket from "@/components/basket";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { ITodoItem } from "@/types/appTypes";
 
 const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<ITodoItem[]>([]);
   const editingRefs = useRef<{ [key: number]: HTMLSpanElement | null }>(
     {}
   ).current;
+
+  const [cards, setCards] = useState([
+    { title: "Life", badgeCount: 0, description: "2024 goals" },
+    { title: "Work", badgeCount: 0, description: "2024 goals" },
+    { title: "Personal", badgeCount: 2, description: "Personal Development" },
+  ]);
 
   const initialTodoItem: ITodoItem = {
     id: Date.now(),
@@ -92,26 +96,35 @@ const TodoList: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-4xl">My list</h2>
-      <div className="py-4">
-        {addTodoButton}
-        <div className="flex flex-col space-y-4 my-4">
-          {todos.map((todo, index) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              index={index}
-              handleCheckBoxChange={handleCheckBoxChange}
-              handleKeyPress={handleKeyPress}
-              onBlur={onBlur}
-              focusOnEdit={focusOnEdit}
-              isNewTodo={index === todos.length - 1}
-            />
+    <DndProvider backend={HTML5Backend}>
+      <div className="p-4 h-full overflow-clip flex">
+        <div className=" flex-1">
+          <h2 className="text-4xl">My list</h2>
+          <div className="py-4">
+            {addTodoButton}
+            <div className="flex flex-col space-y-4 my-4">
+              {todos.map((todo, index) => (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  index={index}
+                  handleCheckBoxChange={handleCheckBoxChange}
+                  handleKeyPress={handleKeyPress}
+                  onBlur={onBlur}
+                  focusOnEdit={focusOnEdit}
+                  isNewTodo={index === todos.length - 1}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col space-y-4">
+          {cards.map((card, index) => (
+            <Basket key={index} basket={card} />
           ))}
         </div>
       </div>
-    </div>
+    </DndProvider>
   );
 };
 

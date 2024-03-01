@@ -11,7 +11,7 @@ const Dashboard = () => {
           <div className="flex-1 m-2">
             <TodoList />
           </div>
-          <div className="self-end pb-4 pr-4">
+          <div className="self-end pb-4 pr-2">
             <BoomBox />
           </div>
         </div>

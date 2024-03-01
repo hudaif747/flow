@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Checkbox } from "@/shadcn/components/ui/checkbox";
 import { DragHandleDots2Icon } from "@radix-ui/react-icons";
-import { motion, useDragControls } from "framer-motion";
-import { ITodoItem } from "@/layouts/TodoList";
+import { useDragControls } from "framer-motion";
+import { useDrag } from "react-dnd";
+import { DnDType, ITodoItem } from "@/types/appTypes";
 
 interface TodoItemProps {
   todo: ITodoItem;
@@ -27,8 +28,16 @@ const TodoItem: React.FC<TodoItemProps> = ({
   isNewTodo,
 }) => {
   const editableRef = useRef<HTMLSpanElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const [framerIsDragging, setFramerIsDragging] = useState(false);
   const dragControls = useDragControls();
+
+  const [{ isDragging }, dragRef] = useDrag(() => ({
+    type: DnDType.ITEM,
+    item: { index },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
 
   useEffect(() => {
     if (isNewTodo && editableRef.current) {
@@ -36,27 +45,15 @@ const TodoItem: React.FC<TodoItemProps> = ({
     }
   }, [isNewTodo]);
 
-  const startDrag = (event: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    dragControls.start(event);
-  };
-  const endDrag = () => {
-    setIsDragging(false);
-  };
-
   return (
-    <motion.div
+    <div
+      ref={dragRef}
       key={todo.id}
       onClick={() => focusOnEdit(todo.id)}
       className="flex w-fit group px-2 py-2 rounded-md hover:bg-secondary hover:cursor-default"
-      drag={isDragging}
-      onPointerUp={endDrag}
-      dragControls={dragControls}
     >
       <div
-        className={`flex opacity-0 group-hover:opacity-100 transition-opacity ease-in-out duration-300 justify-center items-center mr-1 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
-        onPointerDown={startDrag}
-        onPointerUp={endDrag}
+        className={`flex opacity-0 group-hover:opacity-100 transition-opacity ease-in-out duration-300 justify-center items-center mr-1 cursor-move`}
       >
         <DragHandleDots2Icon />
       </div>
@@ -76,7 +73,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
       >
         {todo.text}
       </span>
-    </motion.div>
+    </div>
   );
 };
 
