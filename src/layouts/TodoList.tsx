@@ -8,6 +8,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ITodoItem } from "@/types/appTypes";
+import { ScrollArea } from "@/shadcn/components/ui/scroll-area";
 
 const TodoList: React.FC = () => {
   const { todos, addTodo, removeTodo, updateTodo } = useTodoStore((state) => ({
@@ -29,7 +30,7 @@ const TodoList: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="p-4 h-full overflow-clip flex">
+      <div className="p-4 h-full flex">
         <div className="flex-1">
           <h2 className="text-4xl">My list</h2>
           <div className="py-4">
@@ -56,11 +57,11 @@ const TodoList: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col space-y-4">
+        <ScrollArea className="max-h-screen flex flex-col pr-4 pb-4">
           {baskets.map((basket, index) => (
             <Basket key={index} basket={basket} />
           ))}
-        </div>
+        </ScrollArea>
       </div>
     </DndProvider>
   );

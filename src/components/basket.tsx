@@ -8,7 +8,7 @@ import {
 import { DnDType, IBasket, ITodoItem } from "@/types/appTypes";
 import React, { useState } from "react";
 import { useDrop } from "react-dnd";
-import { useBasketStore } from "../store/baskets";
+import { useBasketStore } from "@/store/baskets";
 import BasketDialog from "./basket-dialog";
 import { useTodoStore } from "@/store/todos";
 
@@ -54,9 +54,9 @@ const Basket: React.FC<{ basket: IBasket }> = ({ basket }) => {
 
   return (
     <>
-      <div ref={dropRef} onClick={() => setDialogOpen(true)}>
+      <div ref={dropRef} onClick={() => setDialogOpen(true)} className="my-4">
         <Card
-          className={`w-64 hover:scale-105 hover:cursor-pointer ${isOver ? "border-2 border-slate-700" : ""}`}
+          className={`w-64 hover:scale-105 hover:cursor-pointer mx-4 transition ease-in duration-150 ${isOver ? "border-2 border-slate-700" : ""}`}
         >
           <CardHeader>
             <CardTitle className="flex justify-between">
