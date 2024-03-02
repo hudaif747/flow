@@ -1,31 +1,50 @@
 import { Badge } from "@/shadcn/components/ui/badge";
-import { Button } from "@/shadcn/components/ui/button";
-import { motion } from "framer-motion";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shadcn/components/ui/card";
-import { Pencil1Icon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { DnDType, IBasket, ITodoItem } from "@/types/appTypes";
+import React, { useState } from "react";
 import { useDrop } from "react-dnd";
+import { useBasketStore } from "../store/baskets";
 import BasketDialog from "./basket-dialog";
-import { DnDType, IBasket } from "@/types/appTypes";
+import { useTodoStore } from "@/store/todos";
 
-interface BasketProps {
-  basket: IBasket;
-}
-
-const Basket: React.FC<BasketProps> = ({ basket }) => {
+const Basket: React.FC<{ basket: IBasket }> = ({ basket }) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const {
+    addTodoToBasket,
+    removeTodoFromBasket,
+    addNewTodoToBasket,
+    updateTodo,
+  } = useBasketStore((state) => ({
+    addTodoToBasket: state.addGlobalTodoToBasket,
+    removeTodoFromBasket: state.removeTodoFromBasket,
+    addNewTodoToBasket: state.addNewTodoToBasket,
+    updateTodo: state.updateTodoInBasket,
+  }));
+
+  const { removeGlobalToDo } = useTodoStore((state) => ({
+    removeGlobalToDo: state.removeTodo,
+  }));
+
+  const addNewTodo = () => {
+    const newTodo: ITodoItem = { id: Date.now(), text: "", checked: false };
+    addNewTodoToBasket(basket.title, newTodo);
+  };
+
+  const removeTodo = (todoId: number) => {
+    removeTodoFromBasket(basket.title, todoId);
+  };
+
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: DnDType.ITEM,
-    drop: (item, monitor) => {
+    drop: (item: ITodoItem, monitor) => {
       if (monitor) {
-        console.log("isOver");
+        addTodoToBasket(basket.title, item.id);
+        removeGlobalToDo(item.id);
       }
     },
     collect: (monitor) => ({
@@ -33,34 +52,28 @@ const Basket: React.FC<BasketProps> = ({ basket }) => {
     }),
   }));
 
-  const handleDialogOpen = (open: boolean) => setDialogOpen(open);
-
   return (
     <>
-      <div ref={dropRef} onClick={() => handleDialogOpen(true)}>
+      <div ref={dropRef} onClick={() => setDialogOpen(true)}>
         <Card
-          className={`w-64 hover:scale-110 hover:cursor-pointer transition-all ease-in-out duration-300 ${isOver ? "border-slate-700 border-2" : ""}`}
+          className={`w-64 hover:scale-105 hover:cursor-pointer ${isOver ? "border-2 border-slate-700" : ""}`}
         >
           <CardHeader>
             <CardTitle className="flex justify-between">
               {basket.title}
               <Badge>{basket.badgeCount}</Badge>
             </CardTitle>
-            <CardDescription className="flex justify-between">
-              {basket.description}
-              {/* <div className="flex">
-                <div className="flex justify-center items-center ml-2 hover:cursor-pointer">
-                  <Pencil1Icon className="w-5 h-5" />
-                </div>
-              </div> */}
-            </CardDescription>
+            <CardDescription>{basket.description}</CardDescription>
           </CardHeader>
         </Card>
       </div>
       <BasketDialog
         basket={basket}
         open={isDialogOpen}
-        onClose={() => handleDialogOpen(false)}
+        onClose={() => setDialogOpen(false)}
+        addNewTodo={addNewTodo}
+        deleteTodo={removeTodo}
+        updateTodo={(id, fields) => updateTodo(basket.title, id, fields)}
       />
     </>
   );

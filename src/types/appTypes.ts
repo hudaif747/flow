@@ -5,11 +5,12 @@ export interface ITodoItem {
 }
 
 export const DnDType = {
-  ITEM: "item",
+  ITEM: "todo_item",
 };
 
 export interface IBasket {
   title: string;
   badgeCount: number;
   description: string;
+  todos: ITodoItem[];
 }

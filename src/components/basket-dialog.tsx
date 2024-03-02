@@ -1,3 +1,4 @@
+import { Button } from "@/shadcn/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -5,23 +6,58 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/shadcn/components/ui/dialog";
-import { Button } from "@/shadcn/components/ui/button";
+import { ScrollArea } from "@/shadcn/components/ui/scroll-area";
+import { IBasket, ITodoItem } from "@/types/appTypes";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { IBasket } from "@/types/appTypes";
+import TodoItem from "./todoItem";
 
 interface BasketDialogProps {
   basket: IBasket;
   open: boolean;
   onClose: () => void;
+  deleteTodo: (id: number) => void;
+  updateTodo: (id: number, updatedFields: Partial<ITodoItem>) => void;
+  addNewTodo: () => void;
 }
 
 const BasketDialog: React.FC<BasketDialogProps> = ({
   basket,
   open,
   onClose,
+  addNewTodo,
+  deleteTodo,
+  updateTodo,
 }) => {
+  const showTodos = (
+    <ScrollArea className="h-96 rounded-md border">
+      <div className="p-2">
+        {basket.todos.map((todo, index) => (
+          <TodoItem
+            key={index}
+            todo={todo}
+            deleteTodo={deleteTodo}
+            updateTodo={updateTodo}
+            isNewTodo={index === basket.todos.length - 1}
+            addNewTodo={addNewTodo}
+            draggable={false}
+          />
+        ))}
+      </div>
+    </ScrollArea>
+  );
+
+  const showEmpty = (
+    <div className="h-96 flex flex-col justify-center items-center rounded-md border text-muted-foreground ">
+      <div>Seems Empty. Drag a to-do here</div>
+      <div>
+        Or{" "}
+        <Button variant={"link"} className="p-1" onClick={addNewTodo}>
+          Add one now
+        </Button>
+      </div>
+    </div>
+  );
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
@@ -31,23 +67,7 @@ const BasketDialog: React.FC<BasketDialogProps> = ({
             {basket.description}
           </DialogDescription>
         </DialogHeader>
-        <div className="flex justify-center border-2">
-          <div className="text-muted-foreground py-32">
-            Seems Empty. Drag a to-do here.
-          </div>
-          {/* <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">
-            Name
-          </Label>
-          <Input id="name" value="Pedro Duarte" className="col-span-3" />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="username" className="text-right">
-            Username
-          </Label>
-          <Input id="username" value="@peduarte" className="col-span-3" />
-        </div> */}
-        </div>
+        {basket.todos.length ? showTodos : showEmpty}
         <DialogFooter>
           <DialogClose asChild>
             <Button type="button" variant="secondary">
