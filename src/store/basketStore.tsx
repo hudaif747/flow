@@ -26,13 +26,13 @@ export const useBasketStore = create<BasketState>((set) => ({
       description: "Personal Development",
       todos: [],
     },
-    { title: "Fitness", badgeCount: 0, description: "Health Goals", todos: [] },
-    {
-      title: "Travel",
-      badgeCount: 0,
-      description: "Explore New Places",
-      todos: [],
-    },
+    // { title: "Fitness", badgeCount: 0, description: "Health Goals", todos: [] },
+    // {
+    //   title: "Travel",
+    //   badgeCount: 0,
+    //   description: "Explore New Places",
+    //   todos: [],
+    // },
     // {
     //   title: "Finance",
     //   badgeCount: 0,

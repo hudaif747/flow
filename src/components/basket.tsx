@@ -62,7 +62,7 @@ const Basket: React.FC<{ basket: IBasket }> = ({ basket }) => {
           <CardHeader>
             <CardTitle className="flex justify-between">
               {basket.title}
-              <Badge>{basket.badgeCount}</Badge>
+              <Badge className="font-bold text-sm">{basket.badgeCount}</Badge>
             </CardTitle>
             <CardDescription>{basket.description}</CardDescription>
           </CardHeader>
