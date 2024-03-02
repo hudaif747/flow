@@ -8,9 +8,9 @@ import {
 import { DnDType, IBasket, ITodoItem } from "@/types/appTypes";
 import React, { useState } from "react";
 import { useDrop } from "react-dnd";
-import { useBasketStore } from "@/store/baskets";
+import { useBasketStore } from "@/store/basketStore";
 import BasketDialog from "./basket-dialog";
-import { useTodoStore } from "@/store/todos";
+import { useTodoStore } from "@/store/todoStore";
 
 const Basket: React.FC<{ basket: IBasket }> = ({ basket }) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -39,7 +39,7 @@ const Basket: React.FC<{ basket: IBasket }> = ({ basket }) => {
     removeTodoFromBasket(basket.title, todoId);
   };
 
-  const [{ isOver }, dropRef] = useDrop(() => ({
+  const [{ isOver, canDrop }, dropRef] = useDrop(() => ({
     accept: DnDType.ITEM,
     drop: (item: ITodoItem, monitor) => {
       if (monitor) {
@@ -49,6 +49,7 @@ const Basket: React.FC<{ basket: IBasket }> = ({ basket }) => {
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
     }),
   }));
 
@@ -56,7 +57,7 @@ const Basket: React.FC<{ basket: IBasket }> = ({ basket }) => {
     <>
       <div ref={dropRef} onClick={() => setDialogOpen(true)} className="my-4">
         <Card
-          className={`w-64 hover:scale-105 hover:cursor-pointer mx-4 transition ease-in duration-150 ${isOver ? "border-2 border-slate-700" : ""}`}
+          className={`w-64 hover:scale-105 hover:cursor-pointer mx-4 transition ease-in duration-150 ${canDrop ? "border-2 border-slate-700" : ""} ${isOver ? "scale-105" : ""}`}
         >
           <CardHeader>
             <CardTitle className="flex justify-between">

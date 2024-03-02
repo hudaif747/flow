@@ -1,6 +1,6 @@
 import React from "react";
-import { useTodoStore } from "../store/todos"; // Adjust path as needed
-import { useBasketStore } from "../store/baskets"; // Adjust path as needed
+import { useTodoStore } from "../store/todoStore";
+import { useBasketStore } from "../store/basketStore";
 import Basket from "@/components/basket";
 import TodoItem from "@/components/todoItem";
 import { Button } from "@/shadcn/components/ui/button";
@@ -17,7 +17,7 @@ const TodoList: React.FC = () => {
     removeTodo: state.removeTodo,
     updateTodo: state.updateTodo,
   }));
-  const baskets = useBasketStore((state) => state.baskets); // If you need to display baskets
+  const baskets = useBasketStore((state) => state.baskets);
 
   const handleAddNewTodo = () => {
     const newTodo: ITodoItem = {

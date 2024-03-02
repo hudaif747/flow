@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { IBasket, ITodoItem } from "@/types/appTypes";
-import { useTodoStore } from "./todos";
+import { useTodoStore } from "./todoStore";
 
 interface BasketState {
   baskets: IBasket[];
