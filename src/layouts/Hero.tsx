@@ -14,12 +14,6 @@ const Hero = () => {
       <Divider />
       <div className="flex-1 flex flex-col justify-center animate-fadeIn_3">
         <SignIn />
-        {/* <button
-          onClick={handleNavigation}
-          className="bg-soft-white bg-opacity-5 backdrop-blur-2xl border border-soft-white py-2 px-4 rounded-lg tracking-widest hover:bg-opacity-100 hover:text-almost-black hover:font-medium transition-all duration-300"
-        >
-          START
-        </button> */}
       </div>
     </div>
   );

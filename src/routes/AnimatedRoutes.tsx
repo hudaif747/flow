@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import AnimatedPage from "../framer/AnimatedPage";
 import Hero from "../layouts/Hero";
 import Dashboard from "../layouts/Dashboard";
+import ProtectedRoute from "./ProtectedRoutes";
 
 type AnimatedRoutesProps = {};
 
@@ -21,9 +22,11 @@ const AnimatedRoutes: React.FC<AnimatedRoutesProps> = () => {
       <Route
         path="/app"
         element={
-          <AnimatedPage>
-            <Dashboard />
-          </AnimatedPage>
+          <ProtectedRoute>
+            <AnimatedPage>
+              <Dashboard />
+            </AnimatedPage>
+          </ProtectedRoute>
         }
       />
     </Routes>

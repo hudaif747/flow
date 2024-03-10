@@ -3,15 +3,34 @@ import { Input } from "@/shadcn/components/ui/input";
 import { Label } from "@/shadcn/components/ui/label";
 import { Icons } from "./icons";
 import { KeyRound } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 const SignIn = () => {
-  const navigate = useNavigate();
-  const [isSignInLoading] = useState(false);
+  const { isLoading, login } = useAuth();
 
-  const handleNavigation = () => {
-    navigate("/app");
+  const handleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        await login(tokenResponse.access_token);
+      } catch {
+        showErrorToast();
+      }
+    },
+    onError: () => {
+      showErrorToast(); // Show login error toast
+    },
+  });
+
+  const showErrorToast = () => {
+    toast("Google Login Failed", {
+      position: "bottom-left",
+      action: {
+        label: "Close",
+        onClick: () => {},
+      },
+    });
   };
 
   return (
@@ -40,12 +59,7 @@ const SignIn = () => {
               disabled
             />
           </div>
-          <Button disabled>
-            {isSignInLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Sign In with Email
-          </Button>
+          <Button disabled>Sign In with Email</Button>
         </div>
       </div>
       <div className="relative mx-16 py-2">
@@ -60,7 +74,14 @@ const SignIn = () => {
       </div>
       <div className="flex justify-center py-4">
         <div className="grid gap-2 w-2/3">
-          <Button variant={"outline"} type="button" onClick={handleNavigation}>
+          <Button
+            variant={"outline"}
+            type="button"
+            onClick={() => handleLogin()}
+          >
+            {isLoading && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
             <KeyRound className="mr-2 h-4 w-4" />
             Sign in with Google
           </Button>

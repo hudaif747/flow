@@ -5,10 +5,12 @@ on:
     branches:
       - main # Specify the branch to trigger the workflow
       - develop
-      
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      VITE_FLOW_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID}}
 
     steps:
       - name: Checkout code
@@ -17,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 'lts/*' # Specify the Node.js version
+          node-version: "lts/*" # Specify the Node.js version
 
       - name: Install dependencies
         run: npm install
