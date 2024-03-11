@@ -8,7 +8,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import AuthProvider from "./context/AuthContext";
 
 function App() {
-  const googleClientId = import.meta.env.VITE_FLOW_GOOGLE_CLIENT_ID;
+  const googleClientId =
+    "993178457476-fmi9aiq2ug0cku2s7cd12dqt8d40frtl.apps.googleusercontent.com";
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
