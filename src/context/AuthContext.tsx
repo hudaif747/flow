@@ -14,6 +14,7 @@ import { toast } from "sonner";
 interface UserDetails {
   name: string;
   email: string;
+  picture: string;
 }
 
 interface AuthContextType {
@@ -46,7 +47,12 @@ const AuthProvider: React.FC<AuthContextProp> = ({ children }) => {
         "https://www.googleapis.com/oauth2/v3/userinfo",
         { headers }
       );
-      return { name: response.data.name, email: response.data.email };
+      console.log(response);
+      return {
+        name: response.data.name,
+        email: response.data.email,
+        picture: response.data.picture,
+      };
     } catch (error) {
       console.error("Authentication error:", error);
       return null; // Return null on failure to authenticate

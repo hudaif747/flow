@@ -14,9 +14,8 @@ const Sidenav = () => {
   };
 
   return (
-    <div className="block">
       <div className="flex flex-col justify-between h-full px-3 py-3">
-        <h2 className="mb-4 px-4 text-5xl font-raleway_dots font-medium">
+        <h2 className="mb-4 text-5xl font-raleway_dots font-medium">
           flow.
         </h2>
         <div className="flex flex-col justify-between py-4 h-full">
@@ -38,7 +37,6 @@ const Sidenav = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

@@ -31,40 +31,42 @@ const TodoList: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="p-4 h-full flex">
-        <div className="flex-1">
-          <h2 className="text-4xl">My list</h2>
-          <div className="py-4">
-            <Button
-              variant={"ghost"}
-              className="text-muted-foreground"
-              onClick={handleAddNewTodo}
-            >
-              <PlusIcon className="h-4 w-4" />
-              Add a todo
-            </Button>
-            <div className="flex flex-col space-y-4 my-4">
-              {todos.map((todo, index) => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  deleteTodo={() => removeTodo(todo.id)}
-                  updateTodo={(id, fields) => updateTodo(id, fields)}
-                  isNewTodo={index === todos.length - 1}
-                  addNewTodo={handleAddNewTodo}
-                  draggable={true}
-                />
-              ))}
+      <ScrollArea className="h-[calc(100vh-2rem)]">
+        <div className="p-4 h-full flex">
+          <div className="flex-1">
+            <h2 className="text-4xl">My list</h2>
+            <div className="py-4">
+              <Button
+                variant={"ghost"}
+                className="text-muted-foreground"
+                onClick={handleAddNewTodo}
+              >
+                <PlusIcon className="h-4 w-4" />
+                Add a todo
+              </Button>
+              <div className="flex flex-col space-y-4 my-4">
+                {todos.map((todo, index) => (
+                  <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    deleteTodo={() => removeTodo(todo.id)}
+                    updateTodo={(id, fields) => updateTodo(id, fields)}
+                    isNewTodo={index === todos.length - 1}
+                    addNewTodo={handleAddNewTodo}
+                    draggable={true}
+                  />
+                ))}
+              </div>
             </div>
           </div>
+          <ScrollArea className="h-[calc(100vh-4rem)] flex flex-col pr-4 pb-8">
+            {baskets.map((basket, index) => (
+              <Basket key={index} basket={basket} />
+            ))}
+            <AddBasket />
+          </ScrollArea>
         </div>
-        <ScrollArea className="max-h-screen flex flex-col pr-4 pb-8">
-          {baskets.map((basket, index) => (
-            <Basket key={index} basket={basket} />
-          ))}
-          <AddBasket />
-        </ScrollArea>
-      </div>
+      </ScrollArea>
     </DndProvider>
   );
 };
