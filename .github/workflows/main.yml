@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      VITE_FLOW_GOOGLE_CLIENT_ID: ${{ secrets.VITE_FLOW_GOOGLE_CLIENT_ID }}
 
     steps:
       - name: Checkout code
@@ -24,8 +26,6 @@ jobs:
 
       - name: Build project
         run: npm run build
-        env:
-          VITE_FLOW_GOOGLE_CLIENT_ID: ${{ secrets.VITE_FLOW_GOOGLE_CLIENT_ID }}
 
       # Add additional steps for deployment
       # For example, deploying to GitHub Pages
