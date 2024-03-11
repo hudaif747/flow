@@ -1,6 +1,6 @@
 import Divider from "../components/divider";
-import SignIn from "@/components/sign-in";
 import logo from "@/assets/logo-white.svg";
+import SignInDialog from "@/components/sign-in-dialog";
 
 const Hero = () => {
   return (
@@ -12,8 +12,8 @@ const Hero = () => {
         <h1>flow.</h1>
       </div>
       <Divider />
-      <div className="flex-1 flex flex-col justify-center animate-fadeIn_3">
-        <SignIn />
+      <div className="flex-1 flex flex-col justify-center animate-fadeIn_3 text-2xl font-thin">
+        <SignInDialog />
       </div>
     </div>
   );
