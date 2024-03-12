@@ -14,29 +14,26 @@ const Sidenav = () => {
   };
 
   return (
-      <div className="flex flex-col justify-between h-full px-3 py-3">
-        <h2 className="mb-4 text-5xl font-raleway_dots font-medium">
-          flow.
-        </h2>
-        <div className="flex flex-col justify-between py-4 h-full">
-          <div>
-            <Button variant="secondary" className="w-full justify-start">
-              <ListBulletIcon className="mr-2 h-4 w-4" />
-              My list
-            </Button>
-          </div>
-          <div>
-            <Button
-              variant="outline"
-              className="w-full justify-start"
-              onClick={handleLogout}
-            >
-              <LogOutIcon className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
-          </div>
+    <div className="flex flex-col justify-between h-full px-3 py-3">
+      <div className="flex flex-col justify-between py-4 h-full">
+        <div>
+          <Button variant="secondary" className="w-full justify-start">
+            <ListBulletIcon className="mr-2 h-4 w-4" />
+            My list
+          </Button>
+        </div>
+        <div>
+          <Button
+            variant="outline"
+            className="w-full justify-start"
+            onClick={handleLogout}
+          >
+            <LogOutIcon className="mr-2 h-4 w-4" />
+            Logout
+          </Button>
         </div>
       </div>
+    </div>
   );
 };
 
