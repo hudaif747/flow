@@ -6,7 +6,7 @@ import Topnav from "./Topnav";
 const Dashboard = () => {
   return (
     <div className="h-screen max-h-screen flex flex-col">
-        <div className="border-b h-8">
+        <div className="border-b">
           <Topnav />
         </div>
         <div className="flex-1 grid grid-cols-7 h-screen">

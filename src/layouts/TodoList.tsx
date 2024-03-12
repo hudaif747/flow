@@ -31,7 +31,7 @@ const TodoList: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <ScrollArea className="h-[calc(100vh-2rem)]">
+      <ScrollArea className="h-[calc(100vh-5rem)]">
         <div className="p-4 h-full flex">
           <div className="flex-1">
             <h2 className="text-4xl">My list</h2>
@@ -59,7 +59,7 @@ const TodoList: React.FC = () => {
               </div>
             </div>
           </div>
-          <ScrollArea className="h-[calc(100vh-4rem)] flex flex-col pr-4 pb-8">
+          <ScrollArea className="h-[calc(100vh-8rem)] flex flex-col pr-4 pb-8">
             {baskets.map((basket, index) => (
               <Basket key={index} basket={basket} />
             ))}
