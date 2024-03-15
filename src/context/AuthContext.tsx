@@ -47,7 +47,6 @@ const AuthProvider: React.FC<AuthContextProp> = ({ children }) => {
         "https://www.googleapis.com/oauth2/v3/userinfo",
         { headers }
       );
-      console.log(response);
       return {
         name: response.data.name,
         email: response.data.email,
