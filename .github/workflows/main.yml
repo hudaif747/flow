@@ -1,4 +1,5 @@
 name: Build and Deploy Flow App
+concurrency: production
 
 on:
   push:
@@ -9,8 +10,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: production
     env:
-      VITE_FLOW_GOOGLE_CLIENT_ID: "SOME SHIT"
+      VITE_FLOW_GOOGLE_CLIENT_ID: ${{vars.VITE_FLOW_GOOGLE_CLIENT_ID}}
 
     steps:
       - name: Checkout code
