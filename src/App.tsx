@@ -9,7 +9,6 @@ import AuthProvider from "./context/AuthContext";
 
 function App() {
   const googleClientId = import.meta.env.VITE_FLOW_GOOGLE_CLIENT_ID;
-  console.log(googleClientId);
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
