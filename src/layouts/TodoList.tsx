@@ -10,6 +10,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { ITodoItem } from "@/types/appTypes";
 import { ScrollArea } from "@/shadcn/components/ui/scroll-area";
 import AddBasket from "@/components/add-basket";
+import CalendarCustom from "@/components/calendar";
 
 const TodoList: React.FC = () => {
   const { todos, addTodo, removeTodo, updateTodo } = useTodoStore((state) => ({
@@ -58,6 +59,9 @@ const TodoList: React.FC = () => {
                 ))}
               </div>
             </div>
+          </div>
+          <div className="p-4">
+            <CalendarCustom />
           </div>
           <ScrollArea className="h-[calc(100vh-8rem)] flex flex-col pr-4 pb-8">
             {baskets.map((basket, index) => (
